@@ -2,15 +2,26 @@
 import React from 'react';
 import './ExpenseCard.css';
 
+export type ExpenseCategory = "food" | "transportation" | "entertainment" | "other" ; 
+type SortOption = "date" | "amount" | "category" ;
+
+
+
 // TypeScript interface defines the structure of props this component expects
 // This acts like a contract - any parent component must provide these exact properties
 export interface ExpenseCardProps {
   id: number;              // Unique identifier for each expense
   description: string;     // What the expense was for (e.g., "Lunch at Joe's Pizza")
-  amount: number;         // Cost in dollars (will be formatted to show currency)
-  category: string;       // Type of expense (e.g., "Food", "Transportation")
+  amount: number;         // Cost in dollars (will be formatted to show currency)   
+  category: ExpenseCategory;
   date: string;          // When the expense occurred (formatted as string)
+
+  // Optional props (can be provided or not)
+  onDelete?: (id: number) => void;    // The ? makes it optional
+  highlighted?: boolean;              // Component might be highlighted
+  showCategory?: boolean;             // Category display might be hidden
 }
+
 
 /**
  * Displays a single expense item with formatted currency and professional styling
@@ -26,8 +37,13 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({
   description, 
   amount, 
   category, 
-  date 
+  date,
+  highlighted = false,      // Default to false if not provided
+  showCategory = true,      // Default to true if not provided
+  onDelete 
 }) => {
+
+  
   // Format currency for professional display
   const formattedAmount = new Intl.NumberFormat('en-US', {
     style: 'currency',
