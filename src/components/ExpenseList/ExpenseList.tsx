@@ -1,16 +1,15 @@
 // src/components/ExpenseList/ExpenseList.tsx
 import React, { useState } from 'react';
 import ExpenseCard from '../ExpenseCard/ExpenseCard';
-import type { ExpenseCardProps, ExpenseCategory } from '../ExpenseCard/ExpenseCard';
+
+import type { ExpenseCardProps, ExpenseCategory } from 
+'../ExpenseCard/ExpenseCard';
 import './ExpenseList.css';
 
 
 // Type for expense data (reusing interface from ExpenseCard)
 type Expense = ExpenseCardProps;
 type FilterOption = "All" | ExpenseCategory;
-
-
-
 
 /**
  * Props interface for ExpenseList component
@@ -20,7 +19,10 @@ type FilterOption = "All" | ExpenseCategory;
  */
 interface ExpenseListProps {
   expenses: Expense[];  // FIXED: Required prop, receives current state from App
+  onDeleteExpense?: (id: number) => void;
 }
+
+
 
 /**
  * ExpenseList Component - FIXED VERSION
@@ -37,10 +39,14 @@ interface ExpenseListProps {
  * @param {ExpenseListProps} props - Component props
  * @returns {JSX.Element} Rendered expense list with filtering controls
  */
-const ExpenseList: React.FC<ExpenseListProps> = ({ expenses }) => {
+const ExpenseList: React.FC<ExpenseListProps> = ({ 
+  expenses, 
+  onDeleteExpense 
+}) => {
   
   // ONLY manage UI state (filtering) - NOT expense data
-  const [filterCategory, setFilterCategory] = useState<FilterOption>('All');
+  const [filterCategory, setFilterCategory] = 
+  useState<FilterOption>('All');
 
   // Filter expenses from props (not local state)
   const filteredExpenses = filterCategory === 'All' 
@@ -57,9 +63,9 @@ const ExpenseList: React.FC<ExpenseListProps> = ({ expenses }) => {
    * Handles category filter change from select dropdown
    * @param {React.ChangeEvent<HTMLSelectElement>} event - Select change event
    */
-  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const filterValue :  FilterOption = event.target.value as FilterOption; 
-    setFilterCategory(filterValue);
+  const handleCategoryChange = (event: 
+    React.ChangeEvent<HTMLSelectElement>) => {
+    setFilterCategory(event.target.value as FilterOption);
 
   };
 

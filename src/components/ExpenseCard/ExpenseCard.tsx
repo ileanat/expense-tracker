@@ -2,7 +2,7 @@
 import React from 'react';
 import './ExpenseCard.css';
 
-export type ExpenseCategory = "food" | "transportation" | "entertainment" | "other" ; 
+export type ExpenseCategory = "Food" | "Transportation" | "Entertainment" | "Other" ; 
 type SortOption = "date" | "amount" | "category" ;
 
 
@@ -43,7 +43,6 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({
   onDelete 
 }) => {
 
-  
   // Format currency for professional display
   const formattedAmount = new Intl.NumberFormat('en-US', {
     style: 'currency',

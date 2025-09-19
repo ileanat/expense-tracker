@@ -1,12 +1,20 @@
 // src/components/ExpenseForm/ExpenseForm.tsx
 import React, { useState } from 'react';
+import type { ExpenseCategory } from '../ExpenseCard/ExpenseCard';
 import './ExpenseForm.css';
+
+interface FormErrors {
+  description?: string;
+  amount?: string;
+  category?: string;
+  date?: string;
+}
 
 // Form data interface
 interface ExpenseFormData {
   description: string;
   amount: string;
-  category: string;
+  category: ExpenseCategory;
   date: string;
 }
 
@@ -19,7 +27,7 @@ interface ExpenseFormProps {
   onSubmit: (expenseData: {
     description: string;
     amount: number;
-    category: string;
+    category: ExpenseCategory;
     date: string;
   }) => void;
 }
@@ -33,6 +41,33 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit }) => {
     date: new Date().toISOString().split('T')[0] // Today's date as default
   });
 
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  const validateExpenseForm = (data: ExpenseFormData): { isValid: boolean; errors: FormErrors } => {
+    const validationErrors: FormErrors = {};
+
+    if (!data.description.trim()) {
+      validationErrors.description = 'Description is required';
+    }
+
+    const amount = parseFloat(data.amount);
+    if (isNaN(amount) || amount <= 0) {
+      validationErrors.amount = 'Amount must be a positive number';
+    }
+
+    if (!data.category) {
+      validationErrors.category = 'Category is required';
+    }
+
+    if (!data.date) {
+      validationErrors.date = 'Date is required';
+    }
+
+    return {
+      isValid: Object.keys(validationErrors).length === 0,
+      errors: validationErrors
+    };
+  };
   /**
    * Handles input changes for all form fields using computed property names
    * @param {React.ChangeEvent<HTMLInputElement | HTMLSelectElement>} e - Change event from form inputs
@@ -45,6 +80,13 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit }) => {
       ...prev,
       [name]: value
     }));
+
+    if (errors[name as keyof FormErrors]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: undefined
+      }));
+    }
   };
 
   /**
@@ -54,27 +96,22 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit }) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     
-    // Basic validation
-    if (!formData.description.trim() || !formData.amount || !formData.date) {
-      alert('Please fill in all required fields');
+    const validation = validateExpenseForm(formData);
+    
+    if (!validation.isValid) {
+      setErrors(validation.errors);
       return;
     }
 
-    const amount = parseFloat(formData.amount);
-    if (amount <= 0) {
-      alert('Amount must be greater than 0');
-      return;
-    }
-
-    // Submit processed data
+    setErrors({});
     onSubmit({
       description: formData.description.trim(),
-      amount: amount,
+      amount: parseFloat(formData.amount),
       category: formData.category,
       date: formData.date
     });
 
-    // Reset form after successful submission
+    // Reset form
     setFormData({
       description: '',
       amount: '',

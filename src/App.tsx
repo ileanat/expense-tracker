@@ -4,6 +4,7 @@ import Header from './components/Header/Header';
 import ExpenseSummary from './components/ExpenseSummary/ExpenseSummary';
 import ExpenseList from './components/ExpenseList/ExpenseList';
 import ExpenseForm from './components/ExpenseForm/ExpenseForm';
+import type { ExpenseCategory } from './components/ExpenseCard/ExpenseCard';
 import './App.css';
 
 // Type for expense data
@@ -11,7 +12,7 @@ interface Expense {
   id: number;
   description: string;
   amount: number;
-  category: string;
+  category: ExpenseCategory;
   date: string;
 }
 
