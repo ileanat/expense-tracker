@@ -7,6 +7,7 @@ import ExpenseForm from './components/ExpenseForm/ExpenseForm';
 import type { ExpenseCategory } from './components/ExpenseCard/ExpenseCard';
 import './App.css';
 
+
 // Type for expense data
 interface Expense {
   id: number;
@@ -56,6 +57,7 @@ function App() {
 
   return (
     <div className="App">
+
       <div className="app-container">
         <Header 
           title="Expense Tracker" 
