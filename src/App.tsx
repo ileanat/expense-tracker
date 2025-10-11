@@ -5,7 +5,6 @@ import ExpenseSummary from './components/ExpenseSummary/ExpenseSummary';
 import ExpenseList from './components/ExpenseList/ExpenseList';
 import ExpenseForm from './components/ExpenseForm/ExpenseForm';
 import type { ExpenseCategory } from './components/ExpenseCard/ExpenseCard';
-import './App.css';
 
 // Type for expense data
 interface Expense {
@@ -52,17 +51,21 @@ function App() {
     setExpenses(prev => [...prev, newExpense]);
   };
 
+  const handleDeleteExpense = (id:number): void => {
+    setExpenses(prev => prev.filter(expenses => expenses.id !== id));
+  };
+
   const totalAmount = expenses.reduce((sum, expense) => sum + expense.amount, 0);
 
-  return (
-    <div className="App">
-      <div className="app-container">
+   return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-4xl mx-auto p-5">
         <Header 
           title="Expense Tracker" 
           subtitle="Manage your spending with confidence" 
         />
         
-        <main className="app-main">
+        <main className="space-y-6">
           <ExpenseSummary 
             totalAmount={totalAmount}
             expenseCount={expenses.length}
@@ -71,8 +74,10 @@ function App() {
           
           <ExpenseForm onSubmit={handleAddExpense} />
           
-          {/* FIXED: Pass expenses directly, not as initialExpenses */}
-          <ExpenseList expenses={expenses} />
+          <ExpenseList 
+            expenses={expenses} 
+            onDeleteExpense={handleDeleteExpense} 
+          />
         </main>
       </div>
     </div>
@@ -80,3 +85,5 @@ function App() {
 }
 
 export default App;
+
+

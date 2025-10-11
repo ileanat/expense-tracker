@@ -4,7 +4,6 @@ import ExpenseCard from '../ExpenseCard/ExpenseCard';
 
 import type { ExpenseCardProps, ExpenseCategory } from 
 '../ExpenseCard/ExpenseCard';
-import './ExpenseList.css';
 
 
 // Type for expense data (reusing interface from ExpenseCard)
@@ -66,21 +65,28 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
   const handleCategoryChange = (event: 
     React.ChangeEvent<HTMLSelectElement>) => {
     setFilterCategory(event.target.value as FilterOption);
-
   };
 
   return (
-    <div className="expense-list">
-      <div className="expense-controls">
-        <h2>Your Expenses</h2>
+    <div className="bg-white rounded-lg p-6 mb-8 shadow-sm border border-gray-200">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
+        <h2 className="text-xl font-bold text-gray-900">Your Expenses</h2>
         
-        <div className="filter-controls">
-          <label htmlFor="category-filter">Filter by category:</label>
+        <div className="flex items-center gap-3">
+          <label htmlFor="category-filter" className="text-sm font-medium text-gray-700">
+            Filter by category:
+          </label>
           <select 
             id="category-filter"
             value={filterCategory}
             onChange={handleCategoryChange}
-            className="category-select"
+            className="
+              px-3 py-1.5 
+              border border-gray-300 rounded-md
+              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+              text-sm bg-white cursor-pointer
+              transition-colors duration-200
+            "
           >
             <option value="All">All Categories</option>
             <option value="Food">Food</option>
@@ -91,15 +97,18 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
         </div>
       </div>
 
-      <div className="expense-summary">
-        <p>
-          Total: ${filteredTotal.toFixed(2)} ({filteredExpenses.length} expenses)
+      <div className="flex justify-between items-center mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <p className="text-gray-700 font-medium">
+          Total: <span className="text-lg font-bold text-green-600">${filteredTotal.toFixed(2)}</span>
+        </p>
+        <p className="text-sm text-gray-500">
+          ({filteredExpenses.length} expenses)
         </p>
       </div>
 
-      <div className="expense-items">
+      <div className="space-y-3">
         {filteredExpenses.length === 0 ? (
-          <p className="no-expenses">
+          <p className="text-center text-gray-500 py-8">
             No expenses found. Add some expenses to get started!
           </p>
         ) : (
@@ -107,6 +116,8 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
             <ExpenseCard
               key={expense.id}
               {...expense}
+              onDelete={onDeleteExpense}
+              highlighted={expense.amount > 50} // Highlight expensive items
             />
           ))
         )}

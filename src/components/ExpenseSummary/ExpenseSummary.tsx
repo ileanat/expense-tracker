@@ -1,6 +1,5 @@
 // src/components/ExpenseSummary/ExpenseSummary.tsx
 import React from 'react';
-import './ExpenseSummary.css';
 
 /**
  * Displays summary statistics for expenses including total amount and count
@@ -26,21 +25,36 @@ const ExpenseSummary: React.FC<ExpenseSummaryProps> = ({
   }).format(totalAmount);
 
   return (
-    <section className="expense-summary">
-      <div className="summary-header">
-        <h2>Expense Summary</h2>
-        <span className="summary-period">{period}</span>
+    <section className="bg-white rounded-lg p-6 mb-8 shadow-sm border border-gray-200">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center pb-4 border-b border-gray-200 mb-5">
+        <h2 className="text-xl font-bold text-gray-900 mb-2 sm:mb-0">
+          Expense Summary
+        </h2>
+        <span className="
+          bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium
+          self-start sm:self-auto
+        ">
+          {period}
+        </span>
       </div>
       
-      <div className="summary-stats">
-        <div className="stat-item">
-          <span className="stat-label">Total Spent</span>
-          <span className="stat-value">{formattedTotal}</span>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="text-center sm:text-left">
+          <span className="block text-sm font-medium text-gray-600 mb-2">
+            Total Spent
+          </span>
+          <span className="text-3xl font-bold text-gray-900">
+            {formattedTotal}
+          </span>
         </div>
         
-        <div className="stat-item">
-          <span className="stat-label">Expenses</span>
-          <span className="stat-value">{expenseCount}</span>
+        <div className="text-center sm:text-left">
+          <span className="block text-sm font-medium text-gray-600 mb-2">
+            Expenses
+          </span>
+          <span className="text-3xl font-bold text-gray-900">
+            {expenseCount}
+          </span>
         </div>
       </div>
     </section>
