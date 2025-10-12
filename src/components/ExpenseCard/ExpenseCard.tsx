@@ -1,6 +1,5 @@
 // src/components/ExpenseCard/ExpenseCard.tsx
 import React from 'react';
-import './ExpenseCard.css';
 
 export type ExpenseCategory = "Food" | "Transportation" | "Entertainment" | "Other" ; 
 type SortOption = "date" | "amount" | "category" ;
@@ -57,14 +56,14 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({
   });
 
   return (
-    <article className="expense-card">
-      <div className="expense-header">
-        <span className="expense-category">{category}</span>
-        <time className="expense-date" dateTime={date}>
+    <article className="bg-white rounded-lg p-4 mb-3 shadow-md transition-all duration-200 border-l-4 border-blue-500">
+      <div className="hover:-translate-y-0.5 hover:shadow-lg">
+        <span className="bg-blue-500 text-white px-2 py-1 rounded text-xs font-semibold uppercase ">{category}</span>
+        <time className="text-gray-500 text-xs" dateTime={date}>
           {formattedDate}
         </time>
       </div>
-      
+
       <div className="expense-body">
         <h3 className="expense-description">{description}</h3>
         <p className="expense-amount">{formattedAmount}</p>
