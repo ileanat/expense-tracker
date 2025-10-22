@@ -1,4 +1,6 @@
 // src/components/ExpenseList/ExpenseList.tsx
+'use client'
+
 import React, { useState } from 'react';
 import ExpenseCard from '../ExpenseCard/ExpenseCard';
 
@@ -92,6 +94,7 @@ const ExpenseList: React.FC<ExpenseListProps> = ({
             <option value="Food">Food</option>
             <option value="Transportation">Transportation</option>
             <option value="Entertainment">Entertainment</option>
+            <option value="Shopping">Shopping</option>
             <option value="Other">Other</option>
           </select>
         </div>

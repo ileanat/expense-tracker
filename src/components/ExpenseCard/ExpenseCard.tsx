@@ -1,8 +1,9 @@
 // src/components/ExpenseCard/ExpenseCard.tsx
+'use client'
+
 import React from 'react';
 
-export type ExpenseCategory = "Food" | "Transportation" | "Entertainment" | "Other" ; 
-type SortOption = "date" | "amount" | "category" ;
+export type ExpenseCategory = "Food" | "Transportation" | "Entertainment" | 'Shopping' | "Other" ; 
 
 
 
@@ -53,21 +54,58 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({
     month: 'short',
     day: 'numeric',
     year: 'numeric'
+    //timeZone: "UTC"
   });
 
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onDelete) {
+      onDelete(id);
+    }
+  };
+
   return (
-    <article className="bg-white rounded-lg p-4 mb-3 shadow-md transition-all duration-200 border-l-4 border-blue-500">
-      <div className="hover:-translate-y-0.5 hover:shadow-lg">
-        <span className="bg-blue-500 text-white px-2 py-1 rounded text-xs font-semibold uppercase ">{category}</span>
-        <time className="text-gray-500 text-xs" dateTime={date}>
+    <article className={`
+      bg-white rounded-lg p-4 mb-3 shadow-md
+      hover:shadow-lg transition-all duration-200
+      border-l-4 relative cursor-pointer
+      ${highlighted ? 'border-l-orange-500 bg-orange-50' : 'border-l-blue-500'}
+    `}>
+      <div className="flex justify-between items-center mb-2">
+        {showCategory && (
+          <span className="inline-block bg-blue-500 text-white px-2 py-1 rounded text-xs font-semibold uppercase">
+            {category}
+          </span>
+        )}
+        <time className="text-sm text-gray-500" dateTime={date}>
           {formattedDate}
         </time>
       </div>
-
-      <div className="expense-body">
-        <h3 className="expense-description">{description}</h3>
-        <p className="expense-amount">{formattedAmount}</p>
+      
+      <div className="space-y-4">
+        <h3 className="mb-2 text-base font-medium text-gray-900">{description}</h3>
+        <p className="m-0 text-lg font-bold text-green-600">{formattedAmount}</p>
       </div>
+        
+      {onDelete && (
+        <div className="flex justify-end pt-2 border-t border-gray-100">
+          <button
+            className="
+              text-red-500 hover:text-white
+              hover:bg-red-500
+              border border-red-500
+              rounded px-3 py-1
+              text-sm font-medium
+              transition-colors duration-200
+              focus:outline-none focus:ring-2 focus:ring-red-400
+            "
+            onClick={handleDelete}
+            aria-label="Delete expense"
+          >
+            Delete
+          </button>
+        </div>
+      )}
     </article>
   );
 };
