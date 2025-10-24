@@ -1,4 +1,3 @@
-import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -28,12 +27,12 @@ export default function Home() {
           </div>
         </div>
 
-        <Link 
+        <a
           href="/expenses"
           className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-lg shadow-lg transition"
         >
           View Your Expenses →
-        </Link>
+        </a>
       </div>
     </div>
   )
