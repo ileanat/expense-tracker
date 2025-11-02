@@ -105,6 +105,7 @@ const ExpenseForm: React.FC<ExpenseFormProps> = ({ onSubmit }) => {
     }
 
     setErrors({});
+    
     onSubmit({
       description: formData.description.trim(),
       amount: parseFloat(formData.amount),

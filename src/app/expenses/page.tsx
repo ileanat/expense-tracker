@@ -1,11 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import Header from '../../components/Header/Header';
-import ExpenseSummary from '../../components/ExpenseSummary/ExpenseSummary';
-import ExpenseForm from '../../components/ExpenseForm/ExpenseForm';
-import ExpenseList from '../../components/ExpenseList/ExpenseList';
-import type { ExpenseCategory } from '../../components/ExpenseCard/ExpenseCard';
+import Link from 'next/link'
+import Header from '@/components/Header/Header'
+import ExpenseSummary from '@/components/ExpenseSummary/ExpenseSummary'
+import ExpenseForm from '@/components/ExpenseForm/ExpenseForm'
+import ExpenseList from '@/components/ExpenseList/ExpenseList'
+import type { ExpenseCategory } from '@/components/ExpenseCard/ExpenseCard';
 
 interface Expense {
   id: number;
@@ -78,10 +79,10 @@ export default function ExpensesPage() {
         </main>
 
         <div className="mt-8 text-center">
-          <a href="/" className="text-blue-600 hover:text-blue-800 inline-flex items-center gap-2">
+          <Link href="/" className="text-blue-600 hover:text-blue-800 inline-flex items-center gap-2">
             <span>←</span>
             <span>Back to Home</span>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
